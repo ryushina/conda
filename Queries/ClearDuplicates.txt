@@ -1,0 +1,17 @@
+--WITH Employees([FirstName],  
+--    [LastName], 
+--    DuplicateCount)
+--AS (SELECT [FirstName], 
+--           [LastName], 
+--           ROW_NUMBER() OVER(PARTITION BY [FirstName],                           
+--                                          [LastName]
+--           ORDER BY ID) AS DuplicateCount
+--    FROM [ICT].[dbo].[Employees])
+--DELETE FROM Employees WHERE DuplicateCount > 1;
+
+SELECT FirstName, LastName, COUNT(*)
+FROM Employees
+GROUP BY FirstName, LastName
+HAVING COUNT(*) > 1
+
+SELECT * FROM Employees
