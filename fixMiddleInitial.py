@@ -7,6 +7,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.engine import result
 import urllib
 import openpyxl
+import re
 
 params = urllib.parse.quote_plus("DRIVER={SQL Server Native Client 11.0};"
                                  "SERVER=DESKTOP-T7S1ENJ\SQL2014;"
@@ -46,5 +47,24 @@ irre = df[(df['MiddleName'].str.len()>2)]
 for index, row in irre.iterrows():
     irre.loc[index,'MiddleName'] = irre.loc[index,'MiddleName'].strip()
 irregulars = irre[(irre['MiddleName'].str.len()>2)]
-print(irregulars)
 
+for index, row in irregulars.iterrows():
+    fixedmn = irregulars.loc[index,'MiddleName']
+    withParenthesesPattern = "^\(.*\)$"
+    withMItoTrim = "^\(.\."
+    middlename = irregulars.loc[index,'MiddleName']
+    if len(re.findall(withParenthesesPattern, middlename))!=0:
+        if len(re.findall(withMItoTrim, middlename))!=0:
+            fixedmn = middlename[1:3]
+           
+        else:
+            fixedmn = middlename[1:-1]
+    elif len(middlename)>2 and "." in middlename[0:3]:
+        fixedmn = middlename[0:2]
+
+    irregulars.loc[index,'MiddleName'] = fixedmn
+
+for index, row in irregulars.iterrows():
+    df.loc[index,'MiddleName'] = row['MiddleName']
+
+df.to_csv('fixedMiddleInitial.csv',index=False)

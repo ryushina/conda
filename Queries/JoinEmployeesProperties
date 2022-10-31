@@ -1,0 +1,6 @@
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT *, Employees1.Name FROM Properties
+left join
+(SELECT *, CONCAT(LastName,', ',FirstName,' ',MiddleName) AS Name FROM Employees) AS Employees1
+ON Properties.Employee = Employees1.Name
+WHERE Properties.Employee = 'Lacanilao, Rustan C.'
