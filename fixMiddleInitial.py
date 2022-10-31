@@ -41,5 +41,10 @@ if short2.empty:
 if midnan2.empty:
     print("Your dataframe is successfully cleared and with no nulls")
 #find other irregular data
-irre = df[df["MiddleName"].str.len() > 2 OR ]
-#alldata_balance = alldata[(alldata[IBRD] !=0) | (alldata[IMF] !=0)]
+irre = df[(df['MiddleName'].str.len()>2)]
+#remove spaces from middlename
+for index, row in irre.iterrows():
+    irre.loc[index,'MiddleName'] = irre.loc[index,'MiddleName'].strip()
+irregulars = irre[(irre['MiddleName'].str.len()>2)]
+print(irregulars)
+
