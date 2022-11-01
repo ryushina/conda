@@ -1,3 +1,4 @@
+#script for uploading employees to the database
 import pandas as pd
 import pyodbc
 import sqlalchemy as sa

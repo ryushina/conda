@@ -1,3 +1,5 @@
+#script for creating a csv file for partially cleaned middle name
+
 import pandas as pd
 import pyodbc
 import numpy as np

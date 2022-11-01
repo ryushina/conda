@@ -1,3 +1,4 @@
+#script for updating middlename of employees based from generated "fixMiddleInitial.csv"
 import pandas as pd
 import pyodbc
 import sqlalchemy as sa
