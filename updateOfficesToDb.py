@@ -14,21 +14,25 @@ params = urllib.parse.quote_plus("DRIVER={SQL Server Native Client 11.0};"
 
 engine = sa.create_engine("mssql+pyodbc:///?odbc_connect={}".format(params))
 table_df = pd.read_sql_table(
-    'PPEs',
+    'Offices',
     con=engine,
     columns=[
         'Id',
-        'EmployeeId',
-        'PropertyNo',
-        'Description',
-        'PurchaseDate',
-        'Article',
-        'Remarks',
-        'OfficeAcr'
+        'OffcAcr',
+        'OfficeName'
     ]
 )
 
-print(table_df)
+df = pd.read_csv('Offices.csv')
 
 
+#print(table_df)
 
+for index, row in df.iterrows():
+    for index1, row1 in table_df.iterrows():
+       if row['OfficeAcr'] == row1['OffcAcr']:
+             df.loc[index,'OfficeId'] = row1['Id']
+             df.loc[index,'OfficeName'] = row1['OfficeName']
+
+
+df.to_csv('OfficeRef.csv',index=False)
