@@ -45,7 +45,18 @@ sql_insert = text("""
     VALUES (:firstname, :middlename, :lastname, :officeid);
 """)
 
-
-
+for index, row in df.iterrows():
+    PropertyNum = 0
+    EmployeeId = 0
+    for index1, row1 in table_df.iterrows():
+        if row['fldPropertyNo'] == row1['PropertyNo']:
+            PropertNum = row['fldPropertyNo']
+    if PropertyNum == 0:
+        print("No match")
+    else:
+        print(f"Match {PropertyNum}")
+ 
+def getEmployeeId(firstname,lastname):
+  return 5 * x
 
 
